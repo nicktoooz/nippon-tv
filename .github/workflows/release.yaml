@@ -42,11 +42,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Download APK
-        uses: actions/download-artifact@v3
-        with:
-          name: app-release.apk
-
       - name: Create Release Tag
         id: create_tag
         run: |
