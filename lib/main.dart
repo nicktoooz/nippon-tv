@@ -15,6 +15,7 @@ final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: '/',
+      name: 'home',
       builder: (BuildContext context, GoRouterState state) {
         return const Home();
       },
