@@ -236,11 +236,18 @@ class _HomeState extends State<Home> {
         url: 'http://r3jx.djtmewibu.com/mx1/index.m3u8',
         category: "ANIMATION",
       ),
+      // Channel(
+      //   color: const Color(0xFFEBDFC7),
+      //   imgPath: 'tokyomx.png',
+      //   title: 'Tokyo MX 2',
+      //   url: 'http://r3jx.djtmewibu.com/mx2/index.m3u8',
+      //   category: "ANIMATION",
+      // ),
       Channel(
-        color: const Color(0xFFEBDFC7),
-        imgPath: 'tokyomx.png',
-        title: 'Tokyo MX 2',
-        url: 'http://r3jx.djtmewibu.com/mx2/index.m3u8',
+        color: const Color(0xFFFFDBDB),
+        imgPath: 'atx.png',
+        title: 'AT-X',
+        url: 'http://r3jx.djtmewibu.com/at-x/index.m3u8',
         category: "ANIMATION",
       ),
       Channel(
