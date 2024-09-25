@@ -71,12 +71,11 @@ class ChannelDatabase {
   }
 
   Future<Database> _initDatabase() async {
-    print('Initializing database...');
+    ('Initializing database...');
     return await openDatabase(
       join(await getDatabasesPath(), 'channels.db'),
       version: 1,
       onCreate: (db, version) {
-        print('Database created');
         return db.execute("CREATE TABLE channels("
             "id TEXT PRIMARY KEY, "
             "imgPath TEXT, "

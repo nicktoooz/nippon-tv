@@ -56,7 +56,6 @@ class _VideoPlayerState extends State<VideoPlayer> {
     _videoPlayerController.initialize().then((_) {
       setState(() {});
     }).catchError((err) {
-      print(err);
     });
   }
 

@@ -20,8 +20,7 @@ class PlayerWidget extends StatefulWidget {
   State<PlayerWidget> createState() => _PlayerWidgetState();
 }
 
-class _PlayerWidgetState extends State<PlayerWidget>
-    with WidgetsBindingObserver {
+class _PlayerWidgetState extends State<PlayerWidget> with WidgetsBindingObserver {
   bool playerState = true;
   double volume = 0;
   double brightness = 0;
@@ -72,8 +71,7 @@ class _PlayerWidgetState extends State<PlayerWidget>
       return;
     }
 
-    _videoPlayerController =
-        VideoPlayerController.networkUrl(Uri.parse(widget.url));
+    _videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(widget.url));
     _chewieController = ChewieController(
       videoPlayerController: _videoPlayerController,
       autoPlay: true,
@@ -95,9 +93,7 @@ class _PlayerWidgetState extends State<PlayerWidget>
 
     _videoPlayerController.initialize().then((_) {
       setState(() {});
-    }).catchError((err) {
-      print(err);
-    });
+    }).catchError((err) {});
   }
 
   Future<void> _getInitialBrightness() async {
@@ -106,7 +102,9 @@ class _PlayerWidgetState extends State<PlayerWidget>
       setState(() {
         brightness = initialBrightness;
       });
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void _getInitialVolume() {
@@ -117,7 +115,9 @@ class _PlayerWidgetState extends State<PlayerWidget>
           initialVolume = vol;
         });
       });
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -144,14 +144,12 @@ class _PlayerWidgetState extends State<PlayerWidget>
     ]);
 
     super.dispose();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.inactive ||
-        state == AppLifecycleState.hidden) {
+    if (state == AppLifecycleState.inactive || state == AppLifecycleState.hidden) {
       if (!kIsWeb && _videoPlayerController.value.isInitialized) {
         _chewieController.pause();
       }
@@ -166,7 +164,9 @@ class _PlayerWidgetState extends State<PlayerWidget>
     try {
       brightness = brightness.clamp(0.0, 1.0);
       await ScreenBrightness().setScreenBrightness(brightness);
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void _setVolume(double value) {
@@ -174,7 +174,9 @@ class _PlayerWidgetState extends State<PlayerWidget>
       volume = volume.clamp(0.0, 1.0);
       VolumeController().showSystemUI = false;
       VolumeController().setVolume(value);
-    } catch (e) {}
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   void _showBrightnessIndicator() {
@@ -222,8 +224,8 @@ class _PlayerWidgetState extends State<PlayerWidget>
     if (kIsWeb) {
       player.seek(Duration(seconds: duration));
     } else {
-      _videoPlayerController.seekTo(Duration(
-          seconds: _videoPlayerController.value.position.inSeconds + duration));
+      _videoPlayerController
+          .seekTo(Duration(seconds: _videoPlayerController.value.position.inSeconds + duration));
     }
   }
 
@@ -241,14 +243,14 @@ class _PlayerWidgetState extends State<PlayerWidget>
                         ? Chewie(controller: _chewieController)
                         : const CircularProgressIndicator()),
             DetailsOverlay(),
-            MediaControls(context)
+            mediaControls(context)
           ],
         ),
       ),
     );
   }
 
-  Positioned MediaControls(BuildContext context) {
+  Positioned mediaControls(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return Positioned.fill(
       child: Row(
@@ -318,8 +320,7 @@ class _PlayerWidgetState extends State<PlayerWidget>
                                         ? Icons.brightness_low
                                         : brightness > 0 && brightness <= 0.5
                                             ? Icons.brightness_medium
-                                            : brightness > 0.5 &&
-                                                    brightness <= 0.7
+                                            : brightness > 0.5 && brightness <= 0.7
                                                 ? Icons.brightness_high
                                                 : Icons.brightness_high,
                                     color: Colors.white,
@@ -406,8 +407,7 @@ class _PlayerWidgetState extends State<PlayerWidget>
                           },
                           color: Colors.white,
                           iconSize: 30,
-                          icon: Icon(
-                              playerState ? Icons.pause : Icons.play_arrow),
+                          icon: Icon(playerState ? Icons.pause : Icons.play_arrow),
                         ),
                         IconButton(
                           color: Colors.white,
@@ -565,9 +565,7 @@ class _PlayerWidgetState extends State<PlayerWidget>
                     Text(
                       widget.title,
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.w600),
+                          color: Colors.white, fontSize: 40, fontWeight: FontWeight.w600),
                     ),
                     Text(
                       _currentTime
