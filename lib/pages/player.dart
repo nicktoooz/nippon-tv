@@ -40,11 +40,9 @@ class _PlayerWidgetState extends State<PlayerWidget> with WidgetsBindingObserver
 
   late Timer _timer;
   DateTime _currentTime = DateTime.now();
-  //Chewie [Mobile]
   late VideoPlayerController _videoPlayerController;
   late ChewieController _chewieController;
 
-  //Web Media Kit
   late final player = Player();
   late final controller = VideoController(player);
 
