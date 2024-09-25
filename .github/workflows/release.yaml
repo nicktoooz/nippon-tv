@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-java@v1
         with:
           java-version: '17.x'
 
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.26.0-0.1.pre
           channel: any
@@ -40,7 +40,7 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Create Release Tag
         id: create_tag
@@ -50,8 +50,13 @@ jobs:
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
+      - name: Download APK
+        uses: actions/download-artifact@v3
+        with:
+          name: app-release.apk
+
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: app-release.apk
           tag_name: ${{ env.TAG_NAME }}
