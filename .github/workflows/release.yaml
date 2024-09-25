@@ -37,11 +37,6 @@ jobs:
           name: app-release.apk
           path: build/app/outputs/flutter-apk/app-release.apk
 
-      - name: List Uploaded Artifacts
-        run: |
-          echo "Uploaded Artifacts:"
-          ls -R $GITHUB_WORKSPACE/.github/workflows/
-
   create_release:
     name: Create GitHub Release
     needs: build_apk
@@ -60,20 +55,23 @@ jobs:
           git tag $TAG_NAME
           git push origin $TAG_NAME
 
+      - name: Read changelog
+        id: read_changelog
+        run: |
+          echo "CHANGES<<EOF" >> $GITHUB_ENV
+          cat CHANGELOG.md >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       - name: Download APK
         uses: actions/download-artifact@v4
         with:
           name: app-release.apk
-          
-      - name: List Directory Before Creating Release
-        run: |
-          echo "Current Directory:"
-          ls -R .
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           files: app-release.apk
           tag_name: ${{ env.TAG_NAME }}
+          body: ${{ env.CHANGES }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
